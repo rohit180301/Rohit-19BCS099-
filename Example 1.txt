@@ -1,0 +1,6 @@
+Assignment Slide No:- 42
+Depth first traversals:
+Inorder - ZWSB YRA A EU GPJ
+Preorder - A B SWZ R YA UE PGJ
+Postorder - ZWS YAR B EGJPU A
+Breadth first or Level Order Traversal: - ABUSREPWYAGJZ
