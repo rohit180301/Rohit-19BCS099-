@@ -1,59 +1,52 @@
-class Tree:
-    def __init__(self, data=None):
-        self.key = data
-        self.children = []
- 
-    def set_root(self, data):
-        self.key = data
- 
-    def add(self, node):
-        self.children.append(node)
- 
-    def search(self, key):
-        if self.key == key:
-            return self
-        for child in self.children:
-            temp = child.search(key)
-            if temp is not None:
-                return temp
-        return None
- 
-    def postorder(self):
-        for child in self.children:
-            child.postorder()
-        print(self.key, end=' ')
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.left = None
+        self.right = None
+#Function for postorder
+    def PostOrder(self, root):
+        if root:
+            self.PostOrder(root.left)
+            self.PostOrder(root.right)
+            print(root.data)
+def prtLevelOrder(root):
+    h = height(root)
+    for i in range (1, h+1):
+        prtLevel(root, i)
+def prtLevel(root, level):
+    if root is None:
+        return
+    if level==1:
+        print(root.data)
+    elif level>1:
+        prtLevel(root.left, level-1)
+        prtLevel(root.right, level-1)
+ #function to define the height of the tree
+def height(node):
+    if node is None:
+        return 0
+    else :
+        lheight = height(node.left)
+        rheight = height(node.right)
 
-tree = None
-print('Templates for commands are as follows:(this assumes no duplicate keys)')
-print('To add data at root enter:- add <data> at root')
-print('To add data below another data enter:- add <data> below <data>')
-print('To perform depth-first search traversal using post-order enter:- dfs')
-print('To end the process enter:- quit')
-
-while True:
-    do = input('What would you like to do? ').split()
-
-    operation = do[0].strip().lower()
-    if operation == 'add':
-        data = int(do[1])
-        new_node = Tree(data)
-        suboperation = do[2].strip().lower() 
-        if suboperation == 'at':
-            tree = new_node
-        elif suboperation == 'below':
-            position = do[3].strip().lower()
-            key = int(position)
-            ref_node = None
-            if tree is not None:
-                ref_node = tree.search(key)
-            if ref_node is None:
-                print('No such key.')
-                continue
-            ref_node.add(new_node)
-
-    elif operation == 'dfs':
-        print('Post-order traversal: ', end='')
-        tree.postorder()
-        print()
-    elif operation == 'quit':
-        break
+        if lheight> rheight:
+            return lheight+1
+        else :
+            return rheight+1
+root = Node(30)
+root.left = Node(13)
+root.right = Node(35)
+root.left.left = Node(10)
+root.left.right = Node(20)
+root.right.left = Node(32)
+root.right.right = Node(40)
+root.left.left.left = Node(6)
+root.left.left.left.left = Node(5)
+root.right.right.left = Node(37)
+root.right.right.right = Node(45)
+root.left.right.left = Node(16)
+root.left.right.right = Node(28)
+print("Level order traversal of binary tree is")
+prtLevelOrder(root)
+print("Post Order traversal: ")
+root.PostOrder(root)
